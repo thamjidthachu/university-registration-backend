@@ -1,0 +1,162 @@
+{% autoescape off %}
+<html>
+    <head>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+            body {
+              font-family: 'Josefin Slab', serif;
+              font-size: 20px;
+              line-height: 24px;
+              color: #333;
+              background: #ececec;
+              overflow-y: scroll;
+              direction: rtl;
+                text-align: right;
+
+            }
+
+            p {
+              margin-bottom: 0.5em;
+            }
+
+            a,
+            a:visited {
+              text-decoration: none;
+              color: #00AE68;
+            }
+
+            .pageTitle {
+              font-size: 1.6em;
+              font-weight: 500;
+              text-transform: capitalize;
+              line-height: 1em;
+              color: #007bff;
+
+            }
+
+            .pageSubTitle {
+              margin-bottom: 0.5em;
+              font-size: 1.3em;
+              font-weight: 700;
+              line-height: 1.7em;
+              color: #222;
+
+            }
+
+
+            .wrapper {
+              width: 600px;
+              margin: 20px auto;
+              text-align: right;
+            }
+
+
+            a.button {
+              display: block;
+              position: relative;
+              float: left;
+              width: 170px;
+              padding: 0;
+              margin: 10px 20px 10px 0;
+              font-weight: 600;
+              text-align: center;
+              line-height: 50px;
+              color: #FFF;
+              border-radius: 5px;
+              transition: all 0.2s ;
+            }
+
+            .btnLightBlue {
+              background: #5DC8CD;
+            }
+
+            .btnFade.btnLightBlue:hover {
+              background: #01939A;
+            }
+
+            .btnLightBlue.btnPush {
+              box-shadow: 0px 5px 0px 0px #1E8185;
+            }
+
+
+            .btnPush:hover {
+              margin-top: 15px;
+              margin-bottom: 5px;
+            }
+
+            .btnLightBlue.btnPush:hover {
+              box-shadow: 0px 0px 0px 0px #1E8185;
+            }
+
+            .btnLightBlue.btnBorder {
+              box-shadow: 0px 0px 0px 0px #01939A;
+            }
+
+            .btnLightBlue.btnBorder:hover {
+              box-shadow: 0px 0px 0px 5px #01939A;
+            }
+
+            .btnLightBlue.btnFloat:before {
+              background: #5DC8CD;
+            }
+
+            .btnSlide .top {
+              position: absolute;
+              top: 0px;
+              left: 0;
+              width: 120px;
+              height: 50px;
+              background: #00AE68;
+              z-index: 10;
+              transition: all 0.2s ;
+              border-radius: 5px;
+            }
+
+            .btnSlide.btnBlueGreen .top {
+              background: #00AE68;
+            }
+
+            .btnSlide.btnLightBlue .top {
+              background: #5DC8CD;
+            }
+
+            .btnSlide.btnOrange .top {
+              background: #FFAA40;
+            }
+
+            .btnSlide.btnPurple .top {
+              background: #A74982;
+            }
+
+            .btnSlide .bottom {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 120px;
+              height: 50px;
+              color: #000;
+              z-index: 5;
+              border-radius: 5px;
+            }
+
+            .btnSlide:hover .top {
+              top: 40px;
+            }
+
+
+
+
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+          <h1>Thank you</h1>
+          <h1 class="pageTitle">.تهانينا {{ user }}</h1>
+          <h1 class="pageSubTitle">لقد تم تسجيلك في جامعة المعرفة بالمملكة العربية السعودية بنجاح.</h1>
+          <h2 class="pageSubTitle">.{{message}}رقم الطلب الخاص بك هو </h2>
+          <h2 class="pageSubTitle">من فضلك قم بتسجيل الدخول من خلال الايميل الذي تم تسجيله او رقم الهوية و رقم الطلب المرفق لاستكمال عمليه التقديم.</h2>
+          <p><a href="{{ domain }}{{link}}" title="Button fade lightblue" class="button btnFade btnLightBlue">تسجيل الدخول</a></p>
+        </div>
+    </body>
+</html>
+{% endautoescape %}

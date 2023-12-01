@@ -1,0 +1,135 @@
+<html dir="auto">
+    <head>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+            body {
+              font-family: 'Josefin Slab', serif;
+              font-size: 20px;
+              line-height: 24px;
+              color: #333;
+              background: #ececec;
+              overflow-y: scroll;
+            }
+
+            p {
+              margin-bottom: 0.5em;
+            }
+
+            a,
+            a:visited {
+              text-decoration: none;
+              color: #00AE68;
+            }
+
+            .pageTitle {
+              font-size: 1.6em;
+              font-weight: 500;
+              text-transform: capitalize;
+              line-height: 1em;
+              color: #007bff;
+            }
+            
+            .pageSubTitle {
+              margin-bottom: 0.5em;
+              font-size: 1.3em;
+              font-weight: 700;
+              line-height: 1.5em;
+              color: #222;
+            }
+
+            .arabicPageSubTitle {
+              margin-bottom: 0.5em;
+              font-size: 1.3em;
+              font-weight: 700;
+              line-height: 1.3em;
+              color: #222;
+              direction: rtl;
+
+            }
+            .arabicPageSubTitle:first-child{
+                color: #007bff !important;
+            }
+            .wrapper {
+              width: 100%;
+            }
+            .clearfix:after {
+               content: " "; /* Older browser do not support empty content */
+               visibility: hidden;
+               display: block;
+               height: 0;
+               clear: both;
+            }
+
+            .button {
+              border-radius: 4px;
+              background-color: #f4511e;
+              border: none;
+              color: #FFFFFF !important;
+              text-align: center;
+              font-size: 20px;
+              padding: 5px;
+              width: 100%;
+              transition: all 0.5s;
+              cursor: pointer;
+              margin: 5px;
+            }
+
+            .button span {
+              cursor: pointer;
+              display: inline-block;
+              position: relative;
+              transition: 0.5s;
+            }
+
+            .button span:after {
+              content: '\00bb';
+              position: absolute;
+              opacity: 0;
+              top: 0;
+              right: -20px;
+              transition: 0.5s;
+            }
+
+            .button:hover span {
+              padding-right: 25px;
+            }
+
+            .button:hover span:after {
+              opacity: 1;
+              right: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1 class="pageTitle">Dear {{ name }} ,</h1>
+            <p class="pageSubTitle">
+                Thank you for applying to AL Maarefa University.<br>
+                This mail is to verify your personal phone number. Please verify the phone number by clicking <a>https://my.um.edu.sa/portal/applicant/login</a> Link for your Application.<br>
+                You can go to your profile page and can update your phone number. Please update the phone number if needed.<br><br>
+
+                Thanks,<br>
+                Almaarefa University<br>
+            </p>
+            <div class="clearfix"></div>
+            <hr/>
+            <div dir="rtl" align="right" style="margin-bottom: 89px;">
+                {% if gender == 'M' %}
+                    <h1 class="pageTitle">عزيزي {{ arabic_name }} ،</h1>
+                {% elif gender == 'F' %}
+                    <h1 class="pageTitle"> عزيزتي  {{ arabic_name }} ،</h1>
+                {% endif %}
+
+            <p class="arabicPageSubTitle" style="">
+    شكرًا لك على طلبك للإلتحاق بجامعة المعرفة هذا البريد للتحقق من رقم هاتفك الشخصي.<br>
+    مع تمنيات لك بالتوفيق<br>
+                الرجاء التحقق من رقم الهاتف بالنقر فوق <a>https://my.um.edu.sa/portal/applicant/login</a> رابط للصفحة يمكنك تغيير رقم الهاتف من خلال صفحة الملف الشخصي الخاصة بك. يرجى تحديث رقم الهاتف .<br>
+    جامعة المعرفة
+</p>
+
+
+
+            </div>
+        </div>
+    </body>
+</html>

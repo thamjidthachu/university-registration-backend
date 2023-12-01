@@ -1,0 +1,56 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14.7
+    container_name: registration-backend-db
+    volumes:
+      - postgres_university-registration-local:/var/lib/postgresql/data/
+    ports:
+      - "5434:5432"
+    env_file:
+      - ./.env.db
+    networks:
+      - university-registration-backend-local
+  redis:
+    container_name: registration-backend-redis
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - university-registration-backend-local      
+  web:
+    container_name: registration-backend-web
+    build: .
+    restart: on-failure
+    command: python manage.py runserver 0.0.0.0:9000
+    volumes:
+       - ./:/usr/src/app
+       - ./logs:/usr/src/app/logs
+    environment: 
+        - DJANGO_SETTINGS_MODULE=university.settings.local
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    networks:
+      - university-registration-backend-local      
+  celery:
+    container_name: registration-backend-celery
+    build: .
+    restart: on-failure
+    command: celery --app=university.settings.celery:app worker --loglevel=INFO --concurrency=3 -B --logfile=logs/celery.log
+    volumes:
+       - ./:/usr/src/app
+    environment: 
+        - DJANGO_SETTINGS_MODULE=university.settings.local
+    depends_on:
+      - db
+      - redis
+    networks:
+      - university-registration-backend-local              
+    
+volumes:
+  postgres_university-registration-local:
+
+networks:
+  university-registration-backend-local:  

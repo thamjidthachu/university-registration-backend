@@ -1,0 +1,142 @@
+{% autoescape off %}
+<html dir="auto">
+    <head>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+            body {
+              font-family: 'Josefin Slab', serif;
+              font-size: 20px;
+              line-height: 24px;
+              color: #333;
+              background: #ececec;
+              overflow-y: scroll;
+            }
+
+            p {
+              margin-bottom: 0.5em;
+            }
+
+            a,
+            a:visited {
+              text-decoration: none;
+              color: #00AE68;
+            }
+
+            .pageTitle {
+              font-size: 1.6em;
+              font-weight: 500;
+              text-transform: capitalize;
+              line-height: 1em;
+              color: #007bff;
+            }
+            
+            .pageSubTitle {
+              margin-bottom: 0.5em;
+              font-size: 1.3em;
+              font-weight: 700;
+              line-height: 1.5em;
+              color: #222;
+            }
+
+            .arabicPageSubTitle {
+              margin-bottom: 0.5em;
+              font-size: 1.3em;
+              font-weight: 700;
+              line-height: 1.3em;
+              color: #222;
+              direction: rtl;
+
+            }
+            .arabicPageSubTitle:first-child{
+                color: #007bff !important;
+            }
+            .wrapper {
+              width: 100%;
+            }
+            .clearfix:after {
+               content: " "; /* Older browser do not support empty content */
+               visibility: hidden;
+               display: block;
+               height: 0;
+               clear: both;
+            }
+
+            .button {
+              border-radius: 4px;
+              background-color: #f4511e;
+              border: none;
+              color: #FFFFFF !important;
+              text-align: center;
+              font-size: 20px;
+              padding: 20px;
+              min-width: 200px;
+              transition: all 0.5s;
+              cursor: pointer;
+              margin: 5px;
+            }
+
+            .button span {
+              cursor: pointer;
+              display: inline-block;
+              position: relative;
+              transition: 0.5s;
+            }
+
+            .button span:after {
+              content: '\00bb';
+              position: absolute;
+              opacity: 0;
+              top: 0;
+              right: -20px;
+              transition: 0.5s;
+            }
+
+            .button:hover span {
+              padding-right: 25px;
+            }
+
+            .button:hover span:after {
+              opacity: 1;
+              right: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1 class="pageTitle">Dear {{ name }} ,</h1>
+            {% for arg in english %}
+                <h2 class="pageSubTitle">{{ arg }}</h2>
+            {% endfor %}
+            <div class="clearfix"></div>
+            <hr/>
+            <div dir="rtl" align="right" style="margin-bottom: 89px;">
+                {% if gender == 'M' %}
+                    <h1 class="pageTitle">عزيزي {{ arabic_name }} ،</h1>
+                {% elif gender == 'F' %}
+                    <h1 class="pageTitle"> عزيزتي  {{ arabic_name }} ،</h1>
+                {% endif %}
+                {% for arg in arabic %}
+
+                    <h1 class="arabicPageSubTitle" style="">{{ arg }}</h1>
+                {% endfor %}
+            </div>
+            {% if kwargs %}
+                {% for k, v in kwargs.items %}
+                    {% if k == "additional_link" %}
+                        <div align="center">
+                            <span>{{ link }}</span>
+                        </div>
+                    {% else %}
+                        <div align="center">
+                            <a href="{{ domain }}{{link}}" class="button">
+                                <span href="{{ domain }}{{link}}" target="_blank" rel="nofollow noopener">{{ v }}</span>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+        </div><br/>
+    </body>
+</html>
+{% endautoescape %}

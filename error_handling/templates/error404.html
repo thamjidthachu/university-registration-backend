@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Almaarefa | Error 404!</title>
+		<meta name="keywords" content="404 iphone web template, Android web template, Smartphone web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+        <link href="{%  static 'css/404.css' %}" rel="stylesheet" type="text/css"  media="all" />
+        <link rel="icon" href="{% static 'images/error500.png' %}" type="image/png"/>
+	</head>
+	<body>
+		<!--start-wrap--->
+		<div class="wrap">
+			<!---start-header---->
+				<div class="header">
+					<div class="logo">
+						<h1><a href="#">Ohh</a></h1>
+					</div>
+				</div>
+			<!---End-header---->
+			<!--start-content------>
+			<div class="content">
+				<img src="{% static 'images/error-img.png' %}" title="error" />
+				<p><span><label>O</label>hh.....</span>You Requested the page that is no longer There.</p>
+				<a href="{{ host }}">Back To Home</a>
+   			</div>
+			<!--End-Cotent------>
+		</div>
+		<!--End-wrap--->
+	</body>
+</html>
+

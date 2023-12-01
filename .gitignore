@@ -1,0 +1,30 @@
+# Created by .ignore support plugin (hsz.mobi)
+**media
+*.sqlite3
+*.idea
+*.vscode
+**__pycache__
+**staticfiles
+**assests
+
+*firebaseControl.py
+*maarefa-firebase.json
+*insertion.log
+*studentId.log
+*.log
+*loadOldSemester.py
+*local_pg.py
+# **migrations
+##Updates
+static/
+# celery beat schedule file
+celerybeat-schedule
+# db envfile
+.env.db
+
+# Env File
+.env
+#**docker-compose
+#**exec
+#**nginx
+

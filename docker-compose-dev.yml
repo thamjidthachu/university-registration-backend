@@ -1,0 +1,73 @@
+version: "3.8"
+services:
+  db:
+    container_name: registration-backend-dev-db
+    image: postgres:14.7
+    volumes:
+      - postgres_university-registration-dev:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./.env.db
+    networks:
+      - university-registration-backend-dev          
+  redis:
+    container_name: registration-backend-dev-redis
+    image: "redis:alpine"
+    ports:
+      - 6380:6379 
+    networks:
+      - university-registration-backend-dev    
+
+  web:
+    container_name: registration-backend-dev
+    build: .
+    command: ./cmd-scripts/runserver.sh
+    volumes:
+       - ./:/usr/src/app
+       - ./logs:/usr/src/app/logs
+       - app_static-university-registration-dev:/usr/src/app/static
+       - app_media-university-registration-dev:/usr/src/app/media
+    environment: 
+        - DJANGO_SETTINGS_MODULE=university.settings.develop
+    depends_on:
+      - db
+      - redis 
+    ports:
+      - "9003:8000"
+    networks:
+      - university-registration-backend-dev          
+  celery:
+    container_name: registration-backend-celery-dev
+    build: .
+    command: celery --app=university.settings.celery:app worker --loglevel=INFO --concurrency=3 -B --logfile=logs/celery.log
+    volumes:
+       - ./:/usr/src/app
+    environment: 
+        - DJANGO_SETTINGS_MODULE=university.settings.develop       
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis  
+    networks:
+      - university-registration-backend-dev                      
+  nginx:
+    container_name: registration-backend-nginx-dev
+    build: ./nginx
+    restart: on-failure
+    ports:
+    - 8006:80
+    depends_on:
+    - web     
+    volumes:
+    - app_static-university-registration-dev:/usr/src/app/static
+    - app_media-university-registration-dev:/usr/src/app/media
+    networks:
+      - university-registration-backend-dev             
+volumes:
+  postgres_university-registration-dev:
+  app_static-university-registration-dev:
+  app_media-university-registration-dev:
+networks:
+  university-registration-backend-dev:    

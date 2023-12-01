@@ -1,0 +1,73 @@
+version: "3.8"
+services:
+  db:
+    container_name: registration-backend-prod-db
+    image: postgres:14.7
+    volumes:
+      - postgres_registration-prod:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./.env.db
+    networks:
+      - registration-backend-prod
+  redis:
+    container_name: registration-backend-prod-redis
+    image: "redis:alpine"
+    ports:
+      - "6380:6379"
+    networks:
+      - registration-backend-prod
+
+  web:
+    container_name: registration-backend-prod
+    build: .
+    command: ./cmd-scripts/runserver.sh
+    volumes:
+       - ./:/usr/src/app
+       - ./logs:/usr/src/app/logs
+       - app_static-registration-prod:/usr/src/app/static
+       - app_media-registration-prod:/usr/src/app/media
+    environment:
+        - DJANGO_SETTINGS_MODULE=university.settings.production
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "9003:8000"
+    networks:
+      - registration-backend-prod
+  celery:
+    container_name: registration-backend-celery-prod
+    build: .
+    command: celery --app=university.settings.celery:app worker --loglevel=INFO --concurrency=15 -B --logfile=logs/celery.log
+    volumes:
+       - ./:/usr/src/app
+    environment:
+        - DJANGO_SETTINGS_MODULE=university.settings.production
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+    networks:
+      - registration-backend-prod
+  nginx:
+    container_name: registration-backend-nginx-prod
+    build: ./nginx
+    restart: on-failure
+    ports:
+    - "8006:80"
+    depends_on:
+    - web
+    volumes:
+    - app_static-registration-prod:/usr/src/app/static
+    - app_media-registration-prod:/usr/src/app/media
+    networks:
+      - registration-backend-prod
+volumes:
+  postgres_registration-prod:
+  app_static-registration-prod:
+  app_media-registration-prod:
+networks:
+  registration-backend-prod:
